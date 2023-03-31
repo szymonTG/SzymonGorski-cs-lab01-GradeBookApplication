@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.IO;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using System.Diagnostics;
 
 namespace GradeBook.GradeBooks
 {
@@ -112,19 +113,26 @@ namespace GradeBook.GradeBooks
 
         public virtual double GetGPA(char letterGrade, StudentType studentType)
         {
+            int honor = 0;
+            if ((studentType == StudentType.Honors || studentType == StudentType.DualEnrolled) && IsWeighted == true)
+            {
+                honor = 1;
+            }
+
             switch (letterGrade)
             {
                 case 'A':
-                    return 4;
+                    return 4 + honor;
                 case 'B':
-                    return 3;
+                    return 3 + honor;
                 case 'C':
-                    return 2;
+                    return 2 + honor;
                 case 'D':
-                    return 1;
+                    return 1 + honor;
                 case 'F':
-                    return 0;
+                    return 0 + honor;
             }
+            
             return 0;
         }
 
